@@ -20,6 +20,7 @@ const authOptions : AuthOptions = {
       },
     },
   ],
+  secret: process.env.NEXTAUTH_SECRET ?? "DEVSECRET"
 };
 
 const handler = NextAuth(authOptions);
