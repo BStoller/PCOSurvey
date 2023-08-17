@@ -41,34 +41,36 @@ const authOptions: AuthOptions = {
       if (account) {
         token.accessToken = account.access_token!;
         token.expiresAt = new Date(account.expires_at! * 1000);
+        token.refreshToken = account.refresh_token!;
+      }
 
-        if (new Date() >= token.expiresAt) {
-          try {
-            const req = await fetch(
-              "https://api.planningcenteronline.com/oauth/token",
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                method: "POST",
-                body: JSON.stringify({
-                  client_id: process.env.CLIENT_ID,
-                  client_secret: process.env.SECRET,
-                  refresh_token: account.refresh_token,
-                  grant_type: "refresh_token",
-                }),
-              }
-            );
+      if (new Date() >= token.expiresAt) {
+        try {
+          const req = await fetch(
+            "https://api.planningcenteronline.com/oauth/token",
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "POST",
+              body: JSON.stringify({
+                client_id: process.env.CLIENT_ID,
+                client_secret: process.env.SECRET,
+                refresh_token: token.refreshToken,
+                grant_type: "refresh_token",
+              }),
+            }
+          );
 
-            const data = (await req.json()) as {access_token : string, expires_in : number, created_at : number, refresh_token : string};
+          const data = (await req.json()) as {access_token : string, expires_in : number, created_at : number, refresh_token : string};
 
-            token.accessToken = data.access_token;
-            token.expiresAt = new Date((data.created_at + data.expires_in) * 1000);
-          } catch (er) {
-            console.error(er);
-          }
+          token.accessToken = data.access_token;
+          token.expiresAt = new Date((data.created_at + data.expires_in) * 1000);
+        } catch (er) {
+          console.error(er);
         }
       }
+
       return token;
     },
   },
