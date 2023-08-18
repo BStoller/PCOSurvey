@@ -26,7 +26,7 @@ export function Navbar() {
   const session = useSession();
 
   return (
-    <div className="dark:bg-zinc-800 py-4 border-b border-zinc-100 dark:border-0">
+    <div className="dark:bg-zinc-800 py-4 border-b border-zinc-100 dark:border-0 shadow-md">
       <div className="container flex justify-between w-full items-center">
         <div className="lg:flex space-x-8">
           <Link href="">Home</Link>

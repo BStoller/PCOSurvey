@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthSessionProvider>
-        <body className={cn(inter.className, "flex h-screen w-full flex-col text-zinc-950 dark:text-zinc-200 bg-zinc-50 dark:bg-zinc-900")}>
+        <body className={cn(inter.className, "flex h-screen w-full flex-col text-zinc-950 dark:text-zinc-300 from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 bg-gradient-to-br")}>
           <Navbar></Navbar>
           <main className="flex-1">{children}</main>
           <Footer></Footer>
