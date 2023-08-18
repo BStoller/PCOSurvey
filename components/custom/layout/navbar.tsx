@@ -5,15 +5,17 @@ import LoginButton from "../loginButton";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
-function AccountButton({
+function AccountAction({
   status,
 }: {
   status: "authenticated" | "unauthenticated" | "loading";
 }) {
   if (status == "authenticated")
-    return <Button onClick={() => signOut()}>Log out</Button>;
+    return <Button variant={"ghost"} onClick={() => signOut()}>Log out</Button>;
 
   <Button
+    variant={"ghost"}
+    className="text-amber-500"
     onClick={() => {
       signIn("pco");
     }}
@@ -26,7 +28,7 @@ export function Navbar() {
   const session = useSession();
 
   return (
-    <div className="dark:bg-zinc-800 py-4 border-b border-zinc-100 dark:border-0 shadow-md">
+    <div className="dark:bg-zinc-800 py-2 shadow-lg">
       <div className="container flex justify-between w-full items-center">
         <div className="lg:flex space-x-8">
           <Link href="">Home</Link>
@@ -34,7 +36,7 @@ export function Navbar() {
           <Link href="">Portal</Link>
         </div>
         <div className="">
-            <AccountButton status={session.status}></AccountButton>
+            <AccountAction status={session.status}></AccountAction>
         </div>
       </div>
     </div>
