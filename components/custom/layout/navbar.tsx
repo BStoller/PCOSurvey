@@ -28,12 +28,11 @@ export function Navbar() {
   const session = useSession();
 
   return (
-    <div className="dark:bg-zinc-800 py-2 shadow-lg">
+    <div className="bg-zinc-800 py-2 shadow-lg">
       <div className="container flex justify-between w-full items-center">
         <div className="lg:flex space-x-8">
           <Link href="">Home</Link>
-          <Link href="">About</Link>
-          <Link href="">Portal</Link>
+          <Link href="">Get Started</Link>
         </div>
         <div className="">
             <AccountAction status={session.status}></AccountAction>

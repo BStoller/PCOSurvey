@@ -1,18 +1,24 @@
 import { Typography } from "@/components/design/typographyPattern";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export const runtime = "edge";
 
 export default function Home() {
   return (
-    <div className="flex h-full from-zinc-50 to-zinc-100 dark:from-zinc-900 dark:to-zinc-800 bg-gradient-to-r">
-      <div className="lg:py-20 py-8 lg:px-80 px-4 font-light">
-        <h1 className="tracking-tight text-4xl text-zinc-200">
-          Keep your volunteers
+    <div className="w-full h-full from-zinc-800 to-slate-800 bg-gradient-to-r">
+      <div className="text-center mx-auto pt-16">
+        <h1 className="text-3xl md:text-5xl  text-zinc-200 font-extrabold">
+          Retain <span className="underline">Healthy</span> volunteers
         </h1>
-        <h2 className="text-4xl dark:text-gray-400">Don&apos;t replace them</h2>
-      </div>
-      <div className=" h-full w-1 ">
-        <Typography></Typography>
+        <p className="text-2xl dark:text-gray-400">
+          Find insights in serving trends and take action
+        </p>
+        <Link href="">
+          <Button size={"lg"} className="mt-4">
+            Get Started
+          </Button>
+        </Link>
       </div>
     </div>
   );

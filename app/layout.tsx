@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <AuthSessionProvider>
         <body className={cn(inter.className, "dark")}>
-          <div className="dark:text-zinc-300 text-zinc-950 flex h-screen w-full flex-col ">
+          <div className="dark:text-zinc-300 text-zinc-950 flex h-screen w-full flex-col">
             <Navbar></Navbar>
             <main className="flex-1">{children}</main>
             <Footer></Footer>
