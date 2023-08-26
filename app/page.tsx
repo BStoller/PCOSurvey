@@ -1,14 +1,24 @@
-export const runtime = "edge";
-
-import LoginButton from "@/components/custom/loginButton";
 import { Button } from "@/components/ui/button";
-import { signIn } from "next-auth/react";
 import Link from "next/link";
+
+export const runtime = "edge";
 
 export default function Home() {
   return (
-    <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-      <LoginButton></LoginButton>
+    <div className="w-full h-full from-zinc-800 to-slate-800 bg-gradient-to-r">
+      <div className="text-center mx-auto pt-16">
+        <h1 className="text-3xl md:text-5xl  text-zinc-200 font-extrabold">
+          Retain <span className="underline">Healthy</span> volunteers
+        </h1>
+        <p className="text-2xl dark:text-gray-400">
+          Find insights in serving trends and take action
+        </p>
+        <Link href="/dashboard">
+          <Button size={"lg"} className="mt-8">
+            Get Started
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 export function Footer() {
     return (
-        <footer className="bg-gray-100 dark:bg-gray-700 w-full flex justify-center py-8">
+        <footer className="bg-zinc-900 w-full flex justify-center py-4">
             <p>PCO Survey</p>
         </footer>
     )
