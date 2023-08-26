@@ -1,4 +1,3 @@
-import { Typography } from "@/components/design/typographyPattern";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -15,7 +14,7 @@ export default function Home() {
           Find insights in serving trends and take action
         </p>
         <Link href="">
-          <Button size={"lg"} className="mt-4">
+          <Button size={"lg"} className="mt-8">
             Get Started
           </Button>
         </Link>
