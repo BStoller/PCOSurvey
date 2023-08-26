@@ -31,11 +31,11 @@ export function Navbar() {
   useEffect(() => {}, [session]);
 
   return (
-    <div className="bg-zinc-800 py-2 shadow-lg">
+    <div className="bg-zinc-900">
       <div className="container flex justify-between w-full items-center">
         <div className="lg:flex space-x-8">
-          <Link href="">Home</Link>
-          <Link href="">Get Started</Link>
+          <Link href="/">Home</Link>
+          <Link href="/dashboard">Get Started</Link>
         </div>
         <div className="">
             <AccountAction status={session.status}></AccountAction>

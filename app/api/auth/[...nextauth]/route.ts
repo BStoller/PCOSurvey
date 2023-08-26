@@ -1,6 +1,6 @@
 import NextAuth, { AuthOptions, User } from "next-auth";
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
   providers: [
     {
@@ -21,6 +21,11 @@ const authOptions: AuthOptions = {
             id: string;
             attributes: { first_name: string; last_name: string };
           };
+          meta: {
+            parent : {
+              id : string
+            }
+          }
         },
         tokens
       ) {
