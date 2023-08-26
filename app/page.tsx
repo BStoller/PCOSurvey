@@ -13,7 +13,7 @@ export default function Home() {
         <p className="text-2xl dark:text-gray-400">
           Find insights in serving trends and take action
         </p>
-        <Link href="">
+        <Link href="/dashboard">
           <Button size={"lg"} className="mt-8">
             Get Started
           </Button>

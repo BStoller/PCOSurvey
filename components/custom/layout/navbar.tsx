@@ -4,6 +4,7 @@ import Link from "next/link";
 import LoginButton from "../loginButton";
 import { getSession, signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
 function AccountAction({
   status,
@@ -26,6 +27,8 @@ function AccountAction({
 
 export function Navbar() {
   const session = useSession();
+
+  useEffect(() => {}, [session]);
 
   return (
     <div className="bg-zinc-800 py-2 shadow-lg">

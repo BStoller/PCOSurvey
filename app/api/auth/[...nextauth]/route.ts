@@ -73,8 +73,7 @@ const authOptions: AuthOptions = {
 
       return token;
     },
-  },
-  secret: process.env.NEXTAUTH_SECRET ?? "DEVSECRET",
+  }
 };
 
 const handler = NextAuth(authOptions);
