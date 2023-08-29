@@ -32,8 +32,8 @@ export function Navbar() {
 
   return (
     <div className="bg-zinc-900">
-      <div className="container flex justify-between w-full items-center">
-        <div className="lg:flex space-x-8">
+      <div className="container flex justify-between w-full h-12 items-center">
+        <div className="lg:flex space-x-8 items-center">
           <Link href="/">Home</Link>
           <Link href="/dashboard">Get Started</Link>
         </div>
