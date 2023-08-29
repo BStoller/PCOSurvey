@@ -49,6 +49,8 @@ export const authOptions: AuthOptions = {
         token.refreshToken = account.refresh_token!;
       }
 
+      token.expiresAt = new Date(token.expiresAt);
+
       if (new Date() >= token.expiresAt) {
         try {
           const req = await fetch(
