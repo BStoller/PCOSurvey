@@ -39,9 +39,9 @@ export default async function Dashboard() {
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="max-w-fit mx-auto">
       <h1 className="text-xl mt-8 text-zinc-400">Select team to analyze</h1>
-      <div className="mx-auto max-w-fit mt-4">
+      <div className="max-w-fit mt-4">
       <SelectTeamCommand serviceTypes={included} teams={data}></SelectTeamCommand>
       </div>
     </div>

@@ -7,6 +7,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { ServiceType, Team } from "@/lib/types/pcoResponses";
+import Link from "next/link";
 
 export function SelectTeamCommand({
   teams,
@@ -20,10 +21,21 @@ export function SelectTeamCommand({
       <CommandInput placeholder="Search a team"></CommandInput>
       <CommandList>
         <CommandGroup>
-            <CommandEmpty>No teams...</CommandEmpty>
-            {teams.map(team => (
-                <CommandItem key={team.id}>{serviceTypes.find(type => type.id == team.relationships?.service_type?.data?.id ?? false)?.attributes?.name} - {team.attributes.name}</CommandItem>
-            ))}
+          <CommandEmpty>No teams...</CommandEmpty>
+          {teams.map((team) => (
+            <Link key={team.id} href={`/dashboard/${team.id}`} prefetch={false}>
+              <CommandItem className="cursor-pointer">
+                {
+                  serviceTypes.find(
+                    (type) =>
+                      type.id == team.relationships?.service_type?.data?.id ??
+                      false
+                  )?.attributes?.name
+                }{" "}
+                - {team.attributes.name}
+              </CommandItem>
+            </Link>
+          ))}
         </CommandGroup>
       </CommandList>
     </Command>
