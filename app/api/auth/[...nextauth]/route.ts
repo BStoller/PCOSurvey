@@ -72,6 +72,7 @@ export const authOptions: AuthOptions = {
           const data = (await req.json()) as {access_token : string, expires_in : number, created_at : number, refresh_token : string};
 
           token.accessToken = data.access_token;
+          token.refreshToken = data.refresh_token;
           token.expiresAt = new Date((data.created_at + data.expires_in) * 1000);
         } catch (er) {
           console.error(er);
