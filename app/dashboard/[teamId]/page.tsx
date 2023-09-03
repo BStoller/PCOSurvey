@@ -64,6 +64,12 @@ export default async function TeamPage({
     (x) => x.schedules.data.length > 0
   );
 
+  mappedData.map(person => {
+    person.schedules.data = person.schedules.data.filter(x => x.attributes.decline_reason == null);
+
+    return person;
+  });
+
   const averageTimesServed =
     mappedData.reduce((prev, cur) => {
       prev += cur.schedules.data.length;
