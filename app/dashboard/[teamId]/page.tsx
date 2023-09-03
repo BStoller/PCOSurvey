@@ -1,5 +1,3 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
 import {
   personRootSchema,
   scheduleRootSchema,
@@ -17,7 +15,9 @@ export default async function TeamPage({
   const req = await pcoFetch(
     `https://api.planningcenteronline.com/services/v2/teams/${teamId}/people?per_page=100`,
     {
-      revalidate: 3600,
+      options: {
+        revalidate: 3600,
+      },
     }
   );
 
@@ -30,7 +30,10 @@ export default async function TeamPage({
       person.links.self +
         `/schedules?filter=after&after=2023-07-01&where[team_id]=${teamId}`,
       {
-        revalidate: 3600,
+        callbackUrl: `/dashboard/${teamId}`,
+        options: {
+          revalidate: 3600,
+        },
       }
     );
 

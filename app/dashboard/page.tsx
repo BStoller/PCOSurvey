@@ -13,7 +13,10 @@ export default async function Dashboard() {
     const req = await pcoFetch(
       `https://api.planningcenteronline.com/services/v2/teams?per_page=100&include=service_type&offset=${
         page * 100
-      }`
+      }`,
+       {
+        callbackUrl: '/dashboard'
+       }
     );
 
     const json = (await req.json()) as TeamsResponse;

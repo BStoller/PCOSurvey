@@ -1,8 +1,11 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { signIn } from "next-auth/react";
+import { redirect } from 'next/navigation';
 
-export async function  pcoFetch(url : string, options?: NextFetchRequestConfig) {
+export async function  pcoFetch(url : string, opts? : {callbackUrl? : string, options?: NextFetchRequestConfig}) {
+
+    const {callbackUrl = "/", options} = opts ?? {};
+
     const user = await getServerSession(authOptions);
 
     const req = await fetch(url, {
@@ -13,7 +16,7 @@ export async function  pcoFetch(url : string, options?: NextFetchRequestConfig) 
     });
 
     if(req.status != 200) {
-        signIn('pco');
+        redirect(`/api/auth/signin?callbackUrl=${callbackUrl}`)
     }
 
     return req;
