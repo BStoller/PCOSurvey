@@ -11,6 +11,14 @@ import {
   teamPageSchema,
 } from "./_components/schema";
 import { pcoFetch } from "@/lib/pcoFetch";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 export default async function TeamPage({
   params: { teamId },
@@ -64,11 +72,11 @@ export default async function TeamPage({
     }, 0) / mappedData.length;
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 space-y-4">
       <div className="flex space-x-4">
         <Card className="w-fit">
           <CardHeader className="pb-0">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className="text-sm font-normal text-zinc-400">
               Average Times Served
             </CardTitle>
           </CardHeader>
@@ -78,7 +86,7 @@ export default async function TeamPage({
         </Card>
         <Card className="w-fit">
           <CardHeader className="pb-0">
-            <CardTitle className="text-sm font-medium">
+            <CardTitle className="text-sm font-normal text-zinc-400">
               Average Times Served
             </CardTitle>
           </CardHeader>
@@ -87,16 +95,46 @@ export default async function TeamPage({
           </CardContent>
         </Card>
       </div>
-      {mappedData.map((person) => (
-        <div key={person.id}>
-          {person.attributes.first_name} {person.attributes.last_name}{" "}
-          {
-            person.schedules.data.filter(
-              (x) => x.attributes.decline_reason != ""
-            ).length
-          }
-        </div>
-      ))}
+      <div className="flex space-x-4">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm font-medium">
+              Top People Serving
+            </CardTitle>
+            <CardDescription>
+              These are the people who served the most in the time period
+            </CardDescription>
+            <CardContent className="p-0">
+              <div className="h-60 overflow-scroll">
+                <Table className="lg:max-w-md overflow-scroll">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Name</TableHead>
+                      <TableHead>#</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {mappedData
+                      .sort(
+                        (a, b) =>
+                          b.schedules.data.length - a.schedules.data.length
+                      )
+                      .map((person) => (
+                        <TableRow key={person.id}>
+                          <TableCell>
+                            {person.attributes.first_name}{" "}
+                            {person.attributes.last_name}
+                          </TableCell>
+                          <TableCell className="text-right">{person.schedules.data.length}</TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </CardContent>
+          </CardHeader>
+        </Card>
+      </div>
     </div>
   );
 }
