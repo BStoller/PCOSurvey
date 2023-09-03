@@ -1,4 +1,11 @@
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
   personRootSchema,
   scheduleRootSchema,
   teamPageSchema,
@@ -45,22 +52,51 @@ export default async function TeamPage({
     };
   });
 
-  const mappedData = await Promise.all(responses);
+  const mappedData = (await Promise.all(responses)).filter(
+    (x) => x.schedules.data.length > 0
+  );
+
+  const averageTimesServed =
+    mappedData.reduce((prev, cur) => {
+      prev += cur.schedules.data.length;
+
+      return prev;
+    }, 0) / mappedData.length;
 
   return (
-    <>
-      {mappedData
-        .filter((person) => person.schedules.data.length > 0)
-        .map((person) => (
-          <div key={person.id}>
-            {person.attributes.first_name} {person.attributes.last_name}{" "}
-            {
-              person.schedules.data.filter(
-                (x) => x.attributes.decline_reason != ""
-              ).length
-            }
-          </div>
-        ))}
-    </>
+    <div className="mt-8">
+      <div className="flex space-x-4">
+        <Card className="w-fit">
+          <CardHeader className="pb-0">
+            <CardTitle className="text-sm font-medium">
+              Average Times Served
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <h2 className="text-4xl">{Math.round(averageTimesServed)}</h2>
+          </CardContent>
+        </Card>
+        <Card className="w-fit">
+          <CardHeader className="pb-0">
+            <CardTitle className="text-sm font-medium">
+              Average Times Served
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <h2 className="text-4xl">{Math.round(averageTimesServed)}</h2>
+          </CardContent>
+        </Card>
+      </div>
+      {mappedData.map((person) => (
+        <div key={person.id}>
+          {person.attributes.first_name} {person.attributes.last_name}{" "}
+          {
+            person.schedules.data.filter(
+              (x) => x.attributes.decline_reason != ""
+            ).length
+          }
+        </div>
+      ))}
+    </div>
   );
 }
