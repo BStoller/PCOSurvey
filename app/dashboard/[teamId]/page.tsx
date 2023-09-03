@@ -71,10 +71,12 @@ export default async function TeamPage({
       return prev;
     }, 0) / mappedData.length;
 
+  const peopleServing = mappedData.length;
+
   return (
     <div className="mt-8 space-y-4">
-      <div className="flex space-x-4">
-        <Card className="w-fit">
+      <div className="md:flex md:space-x-4 space-y-4 md:space-y-0">
+        <Card className="md:w-1/4">
           <CardHeader className="pb-0">
             <CardTitle className="text-sm font-normal text-zinc-400">
               Average Times Served
@@ -84,14 +86,14 @@ export default async function TeamPage({
             <h2 className="text-4xl">{Math.round(averageTimesServed)}</h2>
           </CardContent>
         </Card>
-        <Card className="w-fit">
+        <Card className="md:w-1/4">
           <CardHeader className="pb-0">
             <CardTitle className="text-sm font-normal text-zinc-400">
-              Average Times Served
+              People Serving
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <h2 className="text-4xl">{Math.round(averageTimesServed)}</h2>
+            <h2 className="text-4xl">{Math.round(peopleServing)}</h2>
           </CardContent>
         </Card>
       </div>
@@ -125,7 +127,9 @@ export default async function TeamPage({
                             {person.attributes.first_name}{" "}
                             {person.attributes.last_name}
                           </TableCell>
-                          <TableCell className="text-right">{person.schedules.data.length}</TableCell>
+                          <TableCell className="text-right">
+                            {person.schedules.data.length}
+                          </TableCell>
                         </TableRow>
                       ))}
                   </TableBody>
