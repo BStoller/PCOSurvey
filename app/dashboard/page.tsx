@@ -3,22 +3,17 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import { CommandEmpty } from "cmdk";
 import { TeamsResponse } from "@/lib/types/pcoResponses";
 import { SelectTeamCommand } from "@/components/custom/dashboard/teams";
+import { pcoFetch } from "@/lib/pcoFetch";
 
 // export const runtime = "edge";
 
 export default async function Dashboard() {
-  const user = await getServerSession(authOptions);
 
   async function getData(page: number) {
-    const req = await fetch(
+    const req = await pcoFetch(
       `https://api.planningcenteronline.com/services/v2/teams?per_page=100&include=service_type&offset=${
         page * 100
-      }`,
-      {
-        headers: {
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-      }
+      }`
     );
 
     const json = (await req.json()) as TeamsResponse;

@@ -5,6 +5,7 @@ import {
   scheduleRootSchema,
   teamPageSchema,
 } from "./_components/schema";
+import { pcoFetch } from "@/lib/pcoFetch";
 
 export default async function TeamPage({
   params: { teamId },
@@ -13,17 +14,10 @@ export default async function TeamPage({
 }) {
   const id = teamPageSchema.parse(teamId);
 
-  const user = await getServerSession(authOptions);
-
-  const req = await fetch(
+  const req = await pcoFetch(
     `https://api.planningcenteronline.com/services/v2/teams/${teamId}/people?per_page=100`,
     {
-      headers: {
-        Authorization: `Bearer ${user?.accessToken}`,
-      },
-      next: {
-        revalidate: 3600,
-      },
+      revalidate: 3600,
     }
   );
 
@@ -32,16 +26,11 @@ export default async function TeamPage({
   const personData = personRootSchema.parse(json);
 
   const responses = personData.data.map(async (person) => {
-    const req = await fetch(
+    const req = await pcoFetch(
       person.links.self +
         `/schedules?filter=after&after=2023-07-01&where[team_id]=${teamId}`,
       {
-        headers: {
-          Authorization: `Bearer ${user?.accessToken}`,
-        },
-        next: {
-          revalidate: 3600,
-        },
+        revalidate: 3600,
       }
     );
 
