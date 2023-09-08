@@ -59,7 +59,9 @@ const scheduleSchema = z.object({
   type: z.literal("Schedule"),
   attributes: z.object({
     sort_date : z.coerce.date().optional(),
-    decline_reason: z.string().optional().nullable()
+    decline_reason: z.string().optional().nullable(),
+    team_name: z.string(),
+    team_position_name : z.string()
   })
 });
 

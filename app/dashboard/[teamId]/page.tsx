@@ -19,6 +19,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Bar, BarChart, ResponsiveContainer } from "recharts";
+import * as _ from "lodash";
+import { PositionBarChart } from "./_components/chart";
 
 export default async function TeamPage({
   params: { teamId },
@@ -60,15 +63,51 @@ export default async function TeamPage({
     };
   });
 
-  const mappedData = (await Promise.all(responses)).filter(
-    (x) => x.schedules.data.length > 0
-  );
+  var mappedData = (await Promise.all(responses))
+    .filter((x) => x.schedules.data.length > 0)
+    .map((person) => {
+      const validSchedules = person.schedules.data.filter(
+        (x) => x.attributes.decline_reason == null
+      );
 
-  mappedData.map(person => {
-    person.schedules.data = person.schedules.data.filter(x => x.attributes.decline_reason == null);
+      const positionsServed = _.groupBy(
+        person.schedules.data.filter(
+          (x) => x.attributes.decline_reason == null
+        ),
+        (x) => x.attributes.team_position_name
+      );
 
-    return person;
-  });
+      const numberByPosition = Object.entries(positionsServed).map(
+        ([key, value]) => ({
+          positionName: key,
+          timesServed: value.length,
+        })
+      );
+
+      return {
+        ...person,
+        schedules: {
+          ...person.schedules,
+          data: validSchedules,
+          positionsServed: positionsServed,
+          numberByPosition: numberByPosition,
+        },
+      };
+    });
+
+  const positions = 
+    Object.entries(_.groupBy(
+      mappedData.map((x) => (x.schedules.numberByPosition)).flat(),
+      (x) => x.positionName
+    ))
+    .map(([key, value]) => ({
+    position: key,
+    value: value
+      .map((x) => x.timesServed)
+      .reduce((prev, cur) => {
+        return (prev += cur);
+      }, 0) / value.length,
+  })).sort((a,b) => b.value - a.value);
 
   const averageTimesServed =
     mappedData.reduce((prev, cur) => {
@@ -143,6 +182,14 @@ export default async function TeamPage({
               </div>
             </CardContent>
           </CardHeader>
+        </Card>
+        <Card className="flex-1">
+          <CardHeader className="text-sm font-medium">
+            Average Times Served / Position
+          </CardHeader>
+          <CardContent>
+            <PositionBarChart data={positions}></PositionBarChart>
+          </CardContent>
         </Card>
       </div>
     </div>
