@@ -1,6 +1,3 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { CommandEmpty } from "cmdk";
 import { TeamsResponse } from "@/lib/types/pcoResponses";
 import { SelectTeamCommand } from "@/components/custom/dashboard/teams";
 import { pcoFetch } from "@/lib/pcoFetch";

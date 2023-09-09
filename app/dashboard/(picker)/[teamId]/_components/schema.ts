@@ -2,6 +2,11 @@ import { z } from "zod";
 
 export const teamPageSchema = z.coerce.number().int().min(0);
 
+export const searchParamsSchema = z.object({
+  start : z.coerce.date().optional(),
+  end: z.coerce.date().optional()
+}).optional();
+
 const personAttributes = z.object({
   first_name: z.string(),
   last_name: z.string(),
@@ -59,7 +64,9 @@ const scheduleSchema = z.object({
   type: z.literal("Schedule"),
   attributes: z.object({
     sort_date : z.coerce.date().optional(),
-    decline_reason: z.string().optional().nullable()
+    decline_reason: z.string().optional().nullable(),
+    team_name: z.string(),
+    team_position_name : z.string()
   })
 });
 
