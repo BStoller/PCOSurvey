@@ -3,5 +3,5 @@ export function formatDate(val : Date) {
     const month = val.getUTCMonth() + 1;
     const day = val.getUTCDate();
 
-    return `${year}-${month}-${day}`;
+    return `${year}/${month}/${day}`;
   }

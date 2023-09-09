@@ -1,29 +1,32 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { searchParamsSchema } from "../[teamId]/_components/schema";
 import { END_DEFAULT, START_DEFAULT } from "./dateDefaults";
 import { DatePickerWithRange } from "@/components/custom/dateRangePicker";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/dateFormatter";
-import { startOfMinute } from "date-fns";
 import { z } from "zod";
 
 export function DashboardDateRangePicker() {
   const searchParams = useSearchParams();
 
-  const start =
-    z.coerce.date().optional().parse(searchParams.get("start") ?? START_DEFAULT);
+  useEffect(() => {
+    const start = z.coerce
+      .date()
+      .optional()
+      .parse(searchParams.get("start") ?? START_DEFAULT);
 
-  const end =
-    z.coerce.date().optional().parse(searchParams.get("end") ?? END_DEFAULT);
+    const end = z.coerce
+      .date()
+      .optional()
+      .parse(searchParams.get("end") ?? END_DEFAULT);
 
-  const [dates, setDates] = useState<DateRange | undefined>({
-    from: start,
-    to: end
-  });
+    setDates({ from: start, to: end });
+  }, [searchParams]);
+
+  const [dates, setDates] = useState<DateRange | undefined>();
 
   const [pristine, setPristine] = useState(true);
 
@@ -36,7 +39,9 @@ export function DashboardDateRangePicker() {
   function handleClick() {
     setPristine(true);
     router.push(
-      `?start=${formatDate(dates?.from ?? START_DEFAULT)}&end=${formatDate(dates?.to ?? END_DEFAULT)}`
+      `?start=${formatDate(dates?.from ?? START_DEFAULT)}&end=${formatDate(
+        dates?.to ?? END_DEFAULT
+      )}`
     );
   }
 
