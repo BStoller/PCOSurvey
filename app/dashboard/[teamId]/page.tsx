@@ -8,6 +8,7 @@ import {
 import {
   personRootSchema,
   scheduleRootSchema,
+  searchParamsSchema,
   teamPageSchema,
 } from "./_components/schema";
 import { pcoFetch } from "@/lib/pcoFetch";
@@ -19,16 +20,35 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Bar, BarChart, ResponsiveContainer } from "recharts";
 import * as _ from "lodash";
 import { PositionBarChart } from "./_components/chart";
 
 export default async function TeamPage({
   params: { teamId },
+  searchParams
 }: {
-  params: { teamId: string };
+  params: { teamId: string },
+  searchParams? : any
 }) {
+
+  function formatDate(val : Date) {
+    const year = val.getUTCFullYear();
+    const month = val.getUTCMonth();
+    const day = val.getUTCDay();
+
+    return `${year}/${month}/${day}`;
+  }
+
   const id = teamPageSchema.parse(teamId);
+
+  const defaultStart = new Date();
+
+  defaultStart.setMonth(defaultStart.getMonth() - 3);
+
+  const {
+    end = new Date(),
+    start = defaultStart
+  } = searchParamsSchema.parse(searchParams) ?? {};
 
   const req = await pcoFetch(
     `https://api.planningcenteronline.com/services/v2/teams/${teamId}/people?per_page=100`,
@@ -46,7 +66,7 @@ export default async function TeamPage({
   const responses = personData.data.map(async (person) => {
     const req = await pcoFetch(
       person.links.self +
-        `/schedules?filter=after&after=2023-07-01&where[team_id]=${teamId}`,
+        `/schedules?filter=before,after&after=${formatDate(start)}&before=${formatDate(end)}&where[team_id]=${teamId}`,
       {
         callbackUrl: `/dashboard/${teamId}`,
         options: {
@@ -142,8 +162,8 @@ export default async function TeamPage({
           </CardContent>
         </Card>
       </div>
-      <div className="flex space-x-4">
-        <Card>
+      <div className="flex flex-col lg:flex-row gap-4">
+        <Card className="h-fit">
           <CardHeader>
             <CardTitle className="text-sm font-medium">
               Top People Serving
@@ -151,9 +171,9 @@ export default async function TeamPage({
             <CardDescription>
               These are the people who served the most in the time period
             </CardDescription>
-            <CardContent className="p-0">
-              <div className="h-60 overflow-scroll">
-                <Table className="lg:max-w-md overflow-scroll">
+            <CardContent className="h-60 p-0">
+              <div className="h-60 overflow-auto">
+                <Table className="lg:max-w-md">
                   <TableHeader>
                     <TableRow>
                       <TableHead>Name</TableHead>

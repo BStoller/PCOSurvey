@@ -2,6 +2,11 @@ import { z } from "zod";
 
 export const teamPageSchema = z.coerce.number().int().min(0);
 
+export const searchParamsSchema = z.object({
+  start : z.coerce.date().optional(),
+  end: z.coerce.date().optional()
+}).optional();
+
 const personAttributes = z.object({
   first_name: z.string(),
   last_name: z.string(),
