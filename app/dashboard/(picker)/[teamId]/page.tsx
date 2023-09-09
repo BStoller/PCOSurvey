@@ -22,6 +22,8 @@ import {
 } from "@/components/ui/table";
 import * as _ from "lodash";
 import { PositionBarChart } from "./_components/chart";
+import { END_DEFAULT, START_DEFAULT } from "../_components/dateDefaults";
+import { formatDate } from "@/lib/dateFormatter";
 
 export default async function TeamPage({
   params: { teamId },
@@ -31,14 +33,6 @@ export default async function TeamPage({
   searchParams? : any
 }) {
 
-  function formatDate(val : Date) {
-    const year = val.getUTCFullYear();
-    const month = val.getUTCMonth();
-    const day = val.getUTCDay();
-
-    return `${year}/${month}/${day}`;
-  }
-
   const id = teamPageSchema.parse(teamId);
 
   const defaultStart = new Date();
@@ -46,11 +40,12 @@ export default async function TeamPage({
   defaultStart.setMonth(defaultStart.getMonth() - 3);
 
   const {
-    end = new Date(),
-    start = defaultStart
+    end = END_DEFAULT,
+    start = START_DEFAULT
   } = searchParamsSchema.parse(searchParams) ?? {};
 
-  const req = await pcoFetch(
+  const req = 
+  await pcoFetch(
     `https://api.planningcenteronline.com/services/v2/teams/${teamId}/people?per_page=100`,
     {
       options: {
@@ -64,9 +59,10 @@ export default async function TeamPage({
   const personData = personRootSchema.parse(json);
 
   const responses = personData.data.map(async (person) => {
+    const url = `/schedules?filter=before,after&after=${formatDate(start)}&before=${formatDate(end)}&where[team_id]=${teamId}`;
     const req = await pcoFetch(
       person.links.self +
-        `/schedules?filter=before,after&after=${formatDate(start)}&before=${formatDate(end)}&where[team_id]=${teamId}`,
+        url,
       {
         callbackUrl: `/dashboard/${teamId}`,
         options: {
