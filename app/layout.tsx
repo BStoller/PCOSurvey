@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import { Footer } from "@/components/custom/layout/footer";
 import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/custom/layout/navbar";
-
+import PlausibleProvider from "next-plausible";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,6 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <PlausibleProvider domain="pco-survey.vercel.app" />
+      </head>
       <AuthSessionProvider>
         <body className={cn(inter.className, "dark")}>
           <div className="dark:text-zinc-300 text-zinc-950 flex h-screen w-full flex-col">
