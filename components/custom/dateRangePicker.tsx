@@ -23,14 +23,14 @@ export function DatePickerWithRange({
   setDate?: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
 }) {
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className={cn("flex gap-2", className)}>
       <Popover>
         <PopoverTrigger asChild>
           <Button
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
+              "w-full justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
