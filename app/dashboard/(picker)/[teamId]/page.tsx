@@ -24,28 +24,25 @@ import * as _ from "lodash";
 import { PositionBarChart } from "./_components/chart";
 import { END_DEFAULT, START_DEFAULT } from "../_components/dateDefaults";
 import { formatDate } from "@/lib/dateFormatter";
+import { redirect } from "next/navigation";
 
 export default async function TeamPage({
   params: { teamId },
-  searchParams
+  searchParams,
 }: {
-  params: { teamId: string },
-  searchParams? : any
+  params: { teamId: string };
+  searchParams?: any;
 }) {
-
   const id = teamPageSchema.parse(teamId);
 
   const defaultStart = new Date();
 
   defaultStart.setMonth(defaultStart.getMonth() - 3);
 
-  const {
-    end = END_DEFAULT,
-    start = START_DEFAULT
-  } = searchParamsSchema.parse(searchParams) ?? {};
+  const { end = END_DEFAULT, start = START_DEFAULT } =
+    searchParamsSchema.parse(searchParams) ?? {};
 
-  const req = 
-  await pcoFetch(
+  const req = await pcoFetch(
     `https://api.planningcenteronline.com/services/v2/teams/${teamId}/people?per_page=100`,
     {
       options: {
@@ -59,17 +56,19 @@ export default async function TeamPage({
   const personData = personRootSchema.parse(json);
 
   const responses = personData.data.map(async (person) => {
-    const url = `/schedules?filter=before,after&after=${formatDate(start)}&before=${formatDate(end)}&where[team_id]=${teamId}`;
-    const req = await pcoFetch(
-      person.links.self +
-        url,
-      {
-        callbackUrl: `/dashboard/${teamId}`,
-        options: {
-          revalidate: 3600,
-        },
-      }
-    );
+    const url = `/schedules?filter=before,after&after=${formatDate(
+      start
+    )}&before=${formatDate(end)}&where[team_id]=${teamId}`;
+    const req = await pcoFetch(person.links.self + url, {
+      callbackUrl: `/dashboard/${teamId}`,
+      tooManyHandler: () => {
+        if (start != START_DEFAULT || end != END_DEFAULT)
+          redirect(`/dashboard/${teamId}`);
+      },
+      options: {
+        revalidate: 3600,
+      },
+    });
 
     const data = scheduleRootSchema.parse(await req.json());
 
@@ -111,19 +110,23 @@ export default async function TeamPage({
       };
     });
 
-  const positions = 
-    Object.entries(_.groupBy(
-      mappedData.map((x) => (x.schedules.numberByPosition)).flat(),
+  const positions = Object.entries(
+    _.groupBy(
+      mappedData.map((x) => x.schedules.numberByPosition).flat(),
       (x) => x.positionName
-    ))
+    )
+  )
     .map(([key, value]) => ({
-    position: key,
-    value: value
-      .map((x) => x.timesServed)
-      .reduce((prev, cur) => {
-        return (prev += cur);
-      }, 0) / value.length,
-  })).sort((a,b) => b.value - a.value);
+      position: key,
+      value: Math.ceil(
+        value
+          .map((x) => x.timesServed)
+          .reduce((prev, cur) => {
+            return (prev += cur);
+          }, 0) / value.length
+      ),
+    }))
+    .sort((a, b) => b.value - a.value);
 
   const averageTimesServed =
     mappedData.reduce((prev, cur) => {
