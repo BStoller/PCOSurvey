@@ -26,9 +26,11 @@ export default async function Dashboard() {
 
   var { data, meta, included = [] } = await getData(0);
 
-  for (var i = 1; i <= Math.ceil(meta.total_count / PER_PAGE); i++) {
+  for (var i = 1; i <= Math.ceil(meta.total_count / PER_PAGE) - 1; i++) {
     const { data: _data, included: _included } = await getData(i);
-    data = data.concat(_data);
+    data = data.concat(
+      _data.filter((x) => !data.map((x) => x.id).includes(x.id))
+    );
     included = included?.concat(
       _included?.filter((x) => !included.map((x) => x.id).includes(x.id)) ?? []
     );
