@@ -9,9 +9,9 @@ import PlausibleProvider from "next-plausible";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PCO Survey",
+  title: "Sunday Trends",
   description:
-    "Find the true patterns of your volunteers in Planning Center with PCO Survey",
+    "Find the true patterns of your volunteers in Planning Center with Sunday Trends",
 };
 
 export default function RootLayout({
