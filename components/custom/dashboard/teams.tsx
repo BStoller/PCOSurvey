@@ -18,7 +18,7 @@ export function SelectTeamCommand({
 }) {
   return (
     <Command className="max-w-xs">
-      <CommandInput placeholder="Search a team"></CommandInput>
+      <CommandInput placeholder="Search a team" autoFocus></CommandInput>
       <CommandList>
         <CommandGroup>
           <CommandEmpty>No teams...</CommandEmpty>
