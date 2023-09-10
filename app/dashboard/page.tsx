@@ -9,7 +9,7 @@ const PER_PAGE = 100;
 export default async function Dashboard() {
   async function getData(page: number) {
     const req = await pcoFetch(
-      `https://api.planningcenteronline.com/services/v2/teams?per_page=10&include=service_type&offset=${
+      `https://api.planningcenteronline.com/services/v2/teams?per_page=${PER_PAGE}&include=service_type&offset=${
         page * PER_PAGE
       }`,
       {
