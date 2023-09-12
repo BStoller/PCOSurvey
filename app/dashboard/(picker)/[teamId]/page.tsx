@@ -55,7 +55,7 @@ export default async function TeamPage({
       return prev;
     }, 0) / mappedData.length;
 
-  const peopleServing = mappedData.length;
+  const peopleServing = mappedData.filter(x => !x.hidden).length;
 
   return (
     <div className="mt-8 space-y-4">
