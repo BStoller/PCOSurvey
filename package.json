@@ -6,9 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "studio": "drizzle-kit studio --port 3333",
+    "generate": "drizzle-kit generate:sqlite --out ./drizzle/migrations --breakpoints --schema=./drizzle/schema.ts",
+    "migrate": "tsx drizzle/migrate",
+    "postinstall": "npm run migrate"
   },
   "dependencies": {
+    "@libsql/client": "^0.3.3",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-popover": "^1.0.6",
     "@radix-ui/react-slot": "^1.0.2",
@@ -20,6 +25,8 @@
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
+    "drizzle-orm": "^0.28.6",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "lodash": "^4.17.21",
@@ -32,6 +39,7 @@
     "react-day-picker": "^8.8.1",
     "react-dom": "18.2.0",
     "recharts": "^2.8.0",
+    "server-only": "^0.0.1",
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.6",
@@ -39,6 +47,9 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.198"
+    "@types/lodash": "^4.14.198",
+    "drizzle-kit": "^0.19.13",
+    "fs": "^0.0.1-security",
+    "tsx": "^3.12.8"
   }
 }
