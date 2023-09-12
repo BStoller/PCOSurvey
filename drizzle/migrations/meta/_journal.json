@@ -8,6 +8,20 @@
       "when": 1694431184239,
       "tag": "0000_handy_purple_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1694485568782,
+      "tag": "0001_big_prowler",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1694487413048,
+      "tag": "0002_complete_jane_foster",
+      "breakpoints": true
     }
   ]
 }

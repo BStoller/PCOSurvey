@@ -5,6 +5,9 @@ import { redirect } from "next/navigation";
 import { start } from "repl";
 import { START_DEFAULT, END_DEFAULT } from "../../_components/dateDefaults";
 import { personRootSchema, scheduleRootSchema } from "./schema";
+import { getDB } from "@/drizzle/client";
+import { people } from "@/drizzle/schema";
+import { and, eq, inArray, or } from "drizzle-orm";
 
 export async function getData(start: Date, end: Date, teamId: number) {
   const req = await pcoFetch(
@@ -43,35 +46,49 @@ export async function getData(start: Date, end: Date, teamId: number) {
     };
   });
 
-  return (await Promise.all(responses))
+  var mappedData = (await Promise.all(responses))
     .filter((x) => x.schedules.data.length > 0)
-    .map((person) => {
-      const validSchedules = person.schedules.data.filter(
+    
+
+  const ids = mappedData.map((x) => x.id);
+
+  const db = getDB();
+
+  const hiddenPeople = await db
+    .select()
+    .from(people)
+    .where(and(inArray(people.pcoId, ids), eq(people.teamId, teamId)));
+
+  return mappedData.map(x => ({
+    ...x,
+    hidden: hiddenPeople.filter(y => y.hidden && y.pcoId == x.id).length > 0
+  })).map((person) => {
+    const validSchedules = person.schedules.data.filter(
+      (x) => x.attributes.decline_reason == null
+    );
+
+    const positionsServed = _.groupBy(
+      person.schedules.data.filter(
         (x) => x.attributes.decline_reason == null
-      );
+      ),
+      (x) => x.attributes.team_position_name
+    );
 
-      const positionsServed = _.groupBy(
-        person.schedules.data.filter(
-          (x) => x.attributes.decline_reason == null
-        ),
-        (x) => x.attributes.team_position_name
-      );
+    const numberByPosition = Object.entries(positionsServed).map(
+      ([key, value]) => ({
+        positionName: key,
+        timesServed: value.length,
+      })
+    );
 
-      const numberByPosition = Object.entries(positionsServed).map(
-        ([key, value]) => ({
-          positionName: key,
-          timesServed: value.length,
-        })
-      );
-
-      return {
-        ...person,
-        schedules: {
-          ...person.schedules,
-          data: validSchedules,
-          positionsServed: positionsServed,
-          numberByPosition: numberByPosition,
-        },
-      };
-    });
+    return {
+      ...person,
+      schedules: {
+        ...person.schedules,
+        data: validSchedules,
+        positionsServed: positionsServed,
+        numberByPosition: numberByPosition,
+      },
+    };
+  });
 }

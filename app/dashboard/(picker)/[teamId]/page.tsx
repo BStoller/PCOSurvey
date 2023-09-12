@@ -32,7 +32,7 @@ export default async function TeamPage({
 
   const positions = Object.entries(
     _.groupBy(
-      mappedData.map((x) => x.schedules.numberByPosition).flat(),
+      mappedData.filter(x => !x.hidden).map((x) => x.schedules.numberByPosition).flat(),
       (x) => x.positionName
     )
   )
@@ -49,7 +49,7 @@ export default async function TeamPage({
     .sort((a, b) => b.value - a.value);
 
   const averageTimesServed =
-    mappedData.reduce((prev, cur) => {
+    mappedData.filter(x => !x.hidden).reduce((prev, cur) => {
       prev += cur.schedules.data.length;
 
       return prev;
@@ -92,7 +92,7 @@ export default async function TeamPage({
             </CardDescription>
             <CardContent className="h-60 p-0">
               <div className="h-60 overflow-auto">
-                <PeopleTable data={mappedData}></PeopleTable>
+                <PeopleTable data={mappedData} teamId={id}></PeopleTable>
               </div>
             </CardContent>
           </CardHeader>

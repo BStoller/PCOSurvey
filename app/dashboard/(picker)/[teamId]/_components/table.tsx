@@ -7,8 +7,9 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { getData } from "./data";
+import { RemoveFromListButton } from "./removeFromList";
 
-export function PeopleTable({ data }: { data: Awaited<ReturnType<typeof getData>> }) {
+export function PeopleTable({ data, teamId }: { data: Awaited<ReturnType<typeof getData>>, teamId : number }) {
   return (
     <Table className="lg:max-w-md">
       <TableHeader>
@@ -18,7 +19,7 @@ export function PeopleTable({ data }: { data: Awaited<ReturnType<typeof getData>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data
+        {data.filter(x => !x.hidden)
           .sort((a, b) => b.schedules.data.length - a.schedules.data.length)
           .map((person) => (
             <TableRow key={person.id}>
@@ -28,6 +29,7 @@ export function PeopleTable({ data }: { data: Awaited<ReturnType<typeof getData>
               <TableCell className="text-right">
                 {person.schedules.data.length}
               </TableCell>
+              <TableCell><RemoveFromListButton personId={person.id} teamId={teamId}></RemoveFromListButton></TableCell>
             </TableRow>
           ))}
       </TableBody>

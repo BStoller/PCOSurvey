@@ -1,8 +1,8 @@
+"server-only";
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import * as schema from './schema';
 export function getDB() {
-
   const url = process.env.TURSO_DB_URL?.trim();
   if (url === undefined) {
     throw new Error("TURSO_DB_URL is not defined");
