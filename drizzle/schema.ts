@@ -6,6 +6,5 @@ export const people = sqliteTable('people', {
     hidden: integer('hidden', { mode: 'boolean' }),
     teamId : integer('teamId')
 }, (table) => ({
-    teamIdIdx : index('teamId_pcoId_idx').on(table.teamId, table.pcoId),
-    hidden: index('hidden_idx').on(table.hidden)
+    teamIdIdx : index('teamId_pcoId_idx').on(table.teamId, table.pcoId)
 }) )

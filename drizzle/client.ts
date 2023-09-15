@@ -16,5 +16,5 @@ export function getDB() {
     throw new Error("TURSO_DB_AUTH_TOKEN is not defined");
   }
 
-  return drizzle(createClient({ url, authToken }), { schema });
+  return drizzle(createClient({ url, authToken }), { schema, logger: true});
 }

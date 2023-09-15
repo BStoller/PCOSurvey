@@ -22,6 +22,13 @@
       "when": 1694487413048,
       "tag": "0002_complete_jane_foster",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1694738323279,
+      "tag": "0003_perpetual_grandmaster",
+      "breakpoints": true
     }
   ]
 }
