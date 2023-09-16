@@ -1,9 +1,6 @@
-import { TeamsResponse } from "@/lib/types/pcoResponses";
 import { SelectTeamCommand } from "@/components/custom/dashboard/teams";
-import { pcoFetch } from "@/lib/pcoFetch";
 import { getAllTeams } from "@/lib/planningCenter/teams";
 
-// export const runtime = "edge";
 
 export default async function Dashboard() {
   const {data, serviceTypes} = await getAllTeams();
