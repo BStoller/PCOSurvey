@@ -13,7 +13,8 @@ import { VisibilityButton } from "./visibilityButton";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { EyeIcon } from "lucide-react";
+import { ExternalLink, EyeIcon } from "lucide-react";
+import Link from "next/link";
 
 export function PeopleTable({
   data,
@@ -61,14 +62,20 @@ export function PeopleTable({
               )
               .sort((a, b) => b.schedules.data.length - a.schedules.data.length)
               .map((person) => (
-                <TableRow key={person.id}>
+                <TableRow key={person.id} className="group">
                   <TableCell className="p-0">
-                    {person.attributes.first_name} {person.attributes.last_name}
+                    <div className="h-full flex items-center">
+                      {person.attributes.first_name}{" "}
+                      {person.attributes.last_name}
+                    </div>
                   </TableCell>
                   <TableCell className="text-right p-0">
                     {person.schedules.data.length}
                   </TableCell>
                   <TableCell className="p-0 pl-2 text-center">
+                    <Button asChild variant={"ghost"}>
+                      <Link href={`/person/${person.id}`}><ExternalLink className="h-4 w-4"></ExternalLink></Link>
+                    </Button>
                     {!hidden && (
                       <VisibilityButton
                         personId={person.id}
