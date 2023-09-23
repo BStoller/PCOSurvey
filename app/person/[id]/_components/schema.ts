@@ -44,9 +44,7 @@ const Person = z.object({
 });
 
 export const personRootSchema = z.object({
-    root: z.object({
-        data : Person,
-    })
+    data : Person,
 });
 
 const Schedule = z.object({

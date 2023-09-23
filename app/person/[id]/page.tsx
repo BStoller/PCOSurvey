@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { z } from "zod";
 import { personRootSchema, scheduleRootSchema } from "./_components/schema";
 import { DEFAULT_END_DATE, DEFAULT_START_DATE } from "./_components/defaults";
+import { formatDate } from "@/lib/dateFormatter";
 
 export default async function PersonPage({
   params: { id: _id },
@@ -23,14 +24,18 @@ export default async function PersonPage({
 
   if (personReq.status == 404) return notFound();
 
-  const personData = personRootSchema.parse(personReq);
+  const personJson = await personReq.json();
+
+  const personData = personRootSchema.parse(personJson);
 
   const scheduleReq = await pcoFetch(
-    `https://api.planningcenteronline.com/services/v2/people/${id}/schedules?filter=before,after&per_page=100&before=${DEFAULT_END_DATE}&after=${DEFAULT_START_DATE}`,
+    `https://api.planningcenteronline.com/services/v2/people/${id}/schedules?filter=before,after&per_page=100&before=${formatDate(end)}&after=${formatDate(start)}`,
     {callbackUrl: `/person/${id}`, options: {revalidate: 3600}}
   );
 
-  const scheduleData = scheduleRootSchema.parse(await scheduleReq.json());
+  const scheduleJson = await scheduleReq.json();
+
+  const scheduleData = scheduleRootSchema.parse(scheduleJson);
 
   return <p>{id}</p>;
 }
