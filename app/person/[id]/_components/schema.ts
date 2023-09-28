@@ -48,18 +48,19 @@ export const personRootSchema = z.object({
 });
 
 const Schedule = z.object({
-  id: z.string(),
-  starts_at: z.coerce.date(),
-  plan_id: z.string(),
-  team_id: z.string(),
-  person_id: z.string()
+  sort_date: z.coerce.date(),
+  team_name: z.string(),
+  team_position_name: z.string()
 });
 
 export const scheduleRootSchema = z.object({
   links: z.object({
     self: z.string().url()
   }),
-  data: z.array(Schedule),
+  data: z.object({
+    id: z.string(),
+    attributes: Schedule
+  }).array(),
   meta: z.object({
     onboarding: z.boolean(),
     total_count: z.number(),
@@ -74,4 +75,7 @@ export const scheduleRootSchema = z.object({
     })
   })
 });
-
+export const searchParamsSchema = z.object({
+  start : z.coerce.date().optional(),
+  end: z.coerce.date().optional()
+}).optional();

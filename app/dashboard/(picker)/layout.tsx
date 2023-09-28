@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
-import { DashboardDateRangePicker } from "./_components/dateRangePicker";
+import { StartEndSearchPicker } from "../../../components/custom/searchDateRangePicker";
 
 export default function PickerLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <div className="flex lg:justify-end mt-4">
-        <DashboardDateRangePicker></DashboardDateRangePicker>
+        <StartEndSearchPicker></StartEndSearchPicker>
       </div>
       {children}
     </>

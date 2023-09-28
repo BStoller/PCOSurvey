@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { END_DEFAULT, START_DEFAULT } from "./dateDefaults";
+import { END_DEFAULT, START_DEFAULT } from "../../app/dashboard/(picker)/_components/dateDefaults";
 import { DatePickerWithRange } from "@/components/custom/dateRangePicker";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/dateFormatter";
 import { z } from "zod";
 
-export function DashboardDateRangePicker() {
+export function StartEndSearchPicker() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
