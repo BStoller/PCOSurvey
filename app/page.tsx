@@ -13,7 +13,8 @@ export default function Home() {
             Retain <span className="underline">Healthy</span> <br /> volunteers
           </h1>
           <p className="text-2xl dark:text-gray-400">
-            Find insights in serving trends and take action
+            Find insights in serving trends and take action using your planning
+            center data
           </p>
           <Link href="/dashboard">
             <Button size={"lg"} className="mt-8">
@@ -24,7 +25,7 @@ export default function Home() {
       </div>
       <div className="py-8 container">
         <div className="lg:flex items-center">
-          <div className="p-8">
+          <div className="p-8 max-w-screen-sm">
             <Image
               src={"/TeamPage.jpg"}
               alt="Team View"
@@ -56,7 +57,7 @@ export default function Home() {
                 which areas they are most commonly serving
               </p>
             </div>
-            <div className="p-8">
+            <div className="p-8 max-w-screen-sm">
               <Image
                 src={"/PersonPage.jpg"}
                 alt="Person View"
