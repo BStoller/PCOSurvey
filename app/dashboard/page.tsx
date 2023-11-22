@@ -1,6 +1,9 @@
 import { TeamsResponse } from "@/lib/types/pcoResponses";
 import { SelectTeamCommand } from "@/components/custom/dashboard/teams";
 import { pcoFetch } from "@/lib/pcoFetch";
+import { Input } from "@/components/ui/input";
+import Link from "next/link";
+import { CommandItem } from "cmdk";
 
 // export const runtime = "edge";
 
@@ -37,14 +40,27 @@ export default async function Dashboard() {
   }
 
   return (
-    <div className="max-w-fit mx-auto">
-      <h1 className="text-xl mt-8 text-zinc-400">Select team to analyze</h1>
-      <div className="max-w-fit mt-4">
-        <SelectTeamCommand
-          serviceTypes={included}
-          teams={data}
-        ></SelectTeamCommand>
+    <>
+      <h1 className="pt-8">Select A Team To Analyze</h1>
+      <div className="py-2">
+        <Input placeholder="Search" className="md:max-w-sm"></Input>
       </div>
-    </div>
+      <div className="pb-4 grid gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {data.map((team) => (
+          <Link key={team.id} className="rounded-md p-2 bg-gray-200" href={`/dashboard/${team.id}`} prefetch={false}>
+            <h2>{team.attributes.name}</h2>
+            <p>
+              {
+                included.find(
+                  (type) =>
+                    type.id == team.relationships?.service_type?.data?.id ??
+                    false
+                )?.attributes?.name
+              }
+            </p>
+          </Link>
+        ))}
+      </div>
+    </>
   );
 }
