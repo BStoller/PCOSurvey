@@ -7,12 +7,12 @@ export const runtime = "edge";
 export default function Home() {
   return (
     <>
-      <div className="w-full from-slate-700 to-slate-800 bg-gradient-to-r flex items-center">
+      <div className="w-full from-blue-900 to-blue-950 bg-gradient-to-br flex items-center">
         <div className="container text-center mx-auto max-h-fit py-20">
-          <h1 className="text-5xl lg:text-8xl md:text-5xl  text-zinc-200 font-extrabold mx-auto">
+          <h1 className="text-5xl lg:text-8xl md:text-5xl  text-blue-50 font-extrabold mx-auto">
             Retain <span className="underline">Healthy</span> <br /> volunteers
           </h1>
-          <p className="text-2xl dark:text-gray-400">
+          <p className="text-2xl text-blue-200 opacity-90">
             Find insights in serving trends and take action using your planning
             center data
           </p>
@@ -35,24 +35,24 @@ export default function Home() {
             ></Image>
           </div>
           <div className="text-center lg:text-left max-w-lg">
-            <h2 className="text-2xl xl:text-5xl font-medium">
+            <h2 className="text-2xl xl:text-5xl font-medium tracking-tight text-gray-800">
               Quickly uncover serving trends of your volunteers
             </h2>
-            <p className="mx-auto lg:mx-0 text-lg xl:text-2xl max-w-lg pt-2 text-zinc-400">
+            <p className="mx-auto lg:mx-0 text-lg xl:text-2xl max-w-lg pt-2 text-blue-900 opacity-80">
               Use your planning center account to quickly uncover serving trends
               across all positions and volunteers
             </p>
           </div>
         </div>
       </div>
-      <div className="bg-slate-800">
+      <div className="relative overflow-visible">
         <div className="py-8 container">
           <div className="lg:flex items-center">
-            <div className="text-center lg:text-left max-w-lg">
-              <h2 className="text-2xl xl:text-5xl font-medium">
+            <div className="text-center lg:text-left max-w-lg relative overflow-visible">
+              <h2 className="text-2xl xl:text-5xl font-medium tracking-tight text-gray-800">
                 Ensure you are caring for your volunteers
               </h2>
-              <p className="mx-auto lg:mx-0 text-lg xl:text-2xl max-w-lg pt-2 text-zinc-400">
+              <p className="mx-auto lg:mx-0 text-lg xl:text-2xl max-w-lg pt-2 text-blue-900">
                 Easily understand how often your volunteers are serving and in
                 which areas they are most commonly serving
               </p>

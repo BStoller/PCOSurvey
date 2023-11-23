@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import LoginButton from "../loginButton";
-import { getSession, signIn, signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
@@ -12,11 +11,11 @@ function AccountAction({
   status: "authenticated" | "unauthenticated" | "loading";
 }) {
   if (status == "authenticated")
-    return <Button variant={"ghost"} onClick={() => signOut()}>Log out</Button>;
+    return <Button variant={"ghost"} className="text-gray-600" onClick={() => signOut()}>Log out</Button>;
 
-  <Button
+  return <Button
     variant={"ghost"}
-    className="text-amber-500"
+    className="text-amber-700"
     onClick={() => {
       signIn("pco");
     }}
@@ -31,13 +30,13 @@ export function Navbar() {
   useEffect(() => {}, [session]);
 
   return (
-    <div className="bg-zinc-900">
+    <div className="bg-gray-200">
       <div className="container flex justify-between w-full h-12 items-center">
-        <div className="lg:flex space-x-8 items-center">
+        <div className="lg:flex space-x-8 items-center text-gray-600">
           <Link href="/">Home</Link>
           <Link href="/dashboard">Get Started</Link>
         </div>
-        <div className="">
+        <div>
             <AccountAction status={session.status}></AccountAction>
         </div>
       </div>

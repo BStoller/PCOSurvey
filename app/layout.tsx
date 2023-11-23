@@ -25,10 +25,10 @@ export default function RootLayout({
         <PlausibleProvider domain="pco-survey.vercel.app" />
       </head>
       <AuthSessionProvider>
-        <body className={cn(inter.className, "dark")}>
-          <div className="dark:text-zinc-300 text-zinc-950 flex h-screen w-full flex-col">
+        <body className={cn(inter.className)}>
+          <div className="flex h-screen w-full flex-col">
             <Navbar></Navbar>
-            <main className="flex-1 bg-zinc-800">{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer></Footer>
           </div>
         </body>
