@@ -24,7 +24,7 @@ export default function Home() {
         </div>
       </div>
       <div className="py-8 container">
-        <div className="lg:flex items-center">
+        <div className="flex flex-col lg:flex-row items-center">
           <div className="p-8 max-w-screen-sm">
             <Image
               src={"/TeamPage.jpg"}
@@ -47,7 +47,7 @@ export default function Home() {
       </div>
       <div className="relative overflow-visible">
         <div className="py-8 container">
-          <div className="lg:flex items-center">
+          <div className="flex flex-col lg:flex-row items-center">
             <div className="text-center lg:text-left max-w-lg relative overflow-visible">
               <h2 className="text-2xl xl:text-5xl font-medium tracking-tight text-gray-800">
                 Ensure you are caring for your volunteers
