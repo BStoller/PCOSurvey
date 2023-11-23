@@ -45,14 +45,14 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="">
+      <div className="relative overflow-visible">
         <div className="py-8 container">
           <div className="lg:flex items-center">
-            <div className="text-center lg:text-left max-w-lg">
+            <div className="text-center lg:text-left max-w-lg relative overflow-visible">
               <h2 className="text-2xl xl:text-5xl font-medium tracking-tight text-gray-800">
                 Ensure you are caring for your volunteers
               </h2>
-              <p className="mx-auto lg:mx-0 text-lg xl:text-2xl max-w-lg pt-2 text-blue-900 opacity-80">
+              <p className="mx-auto lg:mx-0 text-lg xl:text-2xl max-w-lg pt-2 text-blue-900">
                 Easily understand how often your volunteers are serving and in
                 which areas they are most commonly serving
               </p>
