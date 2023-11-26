@@ -7,12 +7,14 @@ export const runtime = "edge";
 export default function Home() {
   return (
     <>
-      <div className="w-full from-blue-900 to-blue-950 bg-gradient-to-br flex items-center">
+      <div className="relative w-full flex items-center">
+        <Image className="absolute top-0 left-0 -z-10 opacity-[3%]" src={'/landingPageTexture.jpg'} alt="" fill={true}></Image>
+        <div className="absolute top-0 left-0 h-full w-full from-blue-900 to-blue-950 bg-gradient-to-br -z-20"></div>
         <div className="container text-center mx-auto max-h-fit py-20">
           <h1 className="text-5xl lg:text-8xl md:text-5xl  text-blue-50 font-extrabold mx-auto">
             Retain <span className="underline">Healthy</span> <br /> volunteers
           </h1>
-          <p className="text-2xl text-blue-200 opacity-90">
+          <p className="text-2xl text-blue-200 opacity-90 max-w-sm lg:max-w-none mx-auto">
             Find insights in serving trends and take action using your planning
             center data
           </p>
@@ -23,8 +25,8 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <div className="py-8 container">
-        <div className="flex flex-col lg:flex-row items-center">
+      <div className="pt-4 container">
+        <div className="flex flex-col-reverse lg:flex-row items-center">
           <div className="p-8 max-w-screen-sm">
             <Image
               src={"/TeamPage.jpg"}
@@ -46,7 +48,7 @@ export default function Home() {
         </div>
       </div>
       <div className="relative overflow-visible">
-        <div className="py-8 container">
+        <div className="container">
           <div className="flex flex-col lg:flex-row items-center">
             <div className="text-center lg:text-left max-w-lg relative overflow-visible">
               <h2 className="text-2xl xl:text-5xl font-medium tracking-tight text-gray-800">
